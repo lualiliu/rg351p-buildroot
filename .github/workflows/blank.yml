@@ -22,12 +22,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
       - name: Run a one-line script
         run: sudo apt-get install sed make binutils build-essential gcc g++ bash patch gzip bzip2 perl tar cpio python unzip rsync wget bc git ncurses-base ncurses-bin ncurses-dev libncurses5-dev gcc-multilib dialog
-        
-      # Runs a set of commands using the runners shell
+
       - name: Run a multi-line script
         run: |
           make rg351p_defconfig
           make -j8
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v1
+        with:
+            name: images
+            path: /home/runner/work/rg351p-buildroot/rg351p-buildroot/output/images/
